@@ -105,7 +105,7 @@ Start your instance.
 
 
 	LOAD DATASET TweetItems USING localfs
-	    (("path"="127.0.0.1:///home/user/AsterixDB-Sklearn/tweets_1000.txt"),("format"="adm"));
+	    (("path"="127.0.0.1:///home/user/AsterixDB-Sklearn/twitter_1000.txt"),("format"="adm"));
 
 	select tweet.text as text, skl#SentimentScore(tweet.text) as sentiment
 	    from TweetItems tweet
