@@ -35,7 +35,6 @@ Make sure jep is accessible by a jvm. Drop jep jar file into Java library path.
 ## How To Use
 * Install necessary libraries.
 * Clone this repository onto your local machine.
-* Go into the UDF folder.
 * [Train a machine learning model](#training) 
 * [Select a predefined UDF](#udf)
 * [Compile and launch an AsterixDB instance](#asterix)
@@ -44,19 +43,24 @@ Make sure jep is accessible by a jvm. Drop jep jar file into Java library path.
 ## <a name="training">Train a Machine Learning Model</a>
 Use one of the provided sample files in the training folder to train a machine learning model. In this example we illustrate steps for training a sentiment analysis pipeline using Scikit-Learn.
 
-	python sentiment.py
+	cd training
+
+	python training/sentiment.py
 
 If successfully, you can find a serialized package 'sentiment_pipeline' under target folder
 
 
 Copy the serialized package into AsterixDB-Sklearn folder.
+	
+	cd ..
 
-	cp target/sentiment_pipeline AsterixDB-Sklearn/src/main/resources/
+	cp training/target/sentiment_pipeline AsterixDB-Sklearn/src/main/resources/
 
 ## <a name="udf">Select a Predefined UDF</a>
 
 - Open the 'library_descriptor.xml' file (under AsterixDB-Sklearn/src/main/resources/).
 - Select a corresponding UDF to match the expected input/output (for this example, it is string/int)
+- Edit the model name to match the trained model which is 'sentiment_pipeline'.
 - Edit the function name. This will be the name you will use to call the function from AsterixDB (For our case, lets change it to 'SentimentScore').
 
 
@@ -88,6 +92,8 @@ Start your instance.
 
 
 ## <a name="apply">Call the UDF</a>
+	
+	USE DATAVERSE_NAME;
 
 	create type Tweet as open{
 	    id: int64,
