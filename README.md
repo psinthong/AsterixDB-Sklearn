@@ -45,7 +45,7 @@ Use one of the provided sample files in the training folder to train a machine l
 
 	cd training
 
-	python training/sentiment.py
+	python sentiment.py
 
 If successfully, you can find a serialized package 'sentiment_pipeline' under target folder
 
