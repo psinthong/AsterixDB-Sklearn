@@ -111,7 +111,7 @@ The below example uses a local file adapter to load a sample of 1000 twitter tex
 	LOAD DATASET TweetItems USING localfs
 	    (("path"="127.0.0.1:///home/user/AsterixDB-Sklearn/twitter_1000.txt"),("format"="adm"));
 
-	select tweet.text as text, skl#SentimentScore(tweet.text) as sentiment
+	select tweet.text as text, LIBRARY_NAME#SentimentScore(tweet.text) as sentiment
 	    from TweetItems tweet
 	    limit 100;
 
