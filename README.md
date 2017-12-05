@@ -82,7 +82,7 @@ Use ansible to install the packaged udf and launch AsterixDB.
 
 	./udf.sh -m i -d DATAVERSE_NAME -l LIBRARY_NAME -p UDF_PACKAGE_PATH
 
-The UDF\_PACKAGE\_PATH = ../AsterixDB-Sklearn/target/asterix-sklearn-udf-0.1-SNAPSHOT-testlib.zip
+Put in the absolute path to the packaged udf. For example: replace UDF\_PACKAGE\_PATH with ../home/user/AsterixDB-Sklearn/AsterixDB-Sklearn/target/asterix-sklearn-udf-0.1-SNAPSHOT-testlib.zip
 
 
 Start your instance.
@@ -93,6 +93,10 @@ Start your instance.
 
 ## <a name="apply">Call the UDF</a>
 	
+Bring up the AsterixDB web interface by going to http://localhost:19001/
+
+The below example uses a local file adapter to load a sample of 1000 twitter texts(provided with this repository) and call the sentiment udf. Replace the path to the twitter_1000.txt file with your absolute path.
+
 	USE DATAVERSE_NAME;
 
 	create type Tweet as open{
@@ -110,3 +114,7 @@ Start your instance.
 	select tweet.text as text, skl#SentimentScore(tweet.text) as sentiment
 	    from TweetItems tweet
 	    limit 100;
+
+To stop the instance :
+
+	./stop.sh
