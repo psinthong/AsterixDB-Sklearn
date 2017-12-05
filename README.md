@@ -2,7 +2,15 @@
 
 This document describes a complete cycle for social data analysis using Scikit-Learn package in AsterixDB. We assume you have followed the [installation instructions](http://asterixdb.apache.org/docs/0.9.0/install.html) to set up a running AsterixDB instance.
 
-## Dependencies
+## How To Use
+* Clone this repository onto your local machine.
+* [Install necessary libraries](#install)
+* [Train a machine learning model](#training) 
+* [Select a predefined UDF](#udf)
+* [Compile and launch an AsterixDB instance](#asterix)
+* [Call the UDF](#apply)
+
+## <a name="install">Dependencies</a>
 * Python >=2.7 or >= 3.3
 * [Pip](https://pip.pypa.io/en/stable/)
 * Java >= 1.7
@@ -31,14 +39,6 @@ Make sure jep is accessible by a jvm. Drop jep jar file into Java library path.
 
 	sudo cp lib/libjep.jnilib /Library/Java/Extensions
 
-
-## How To Use
-* Install necessary libraries.
-* Clone this repository onto your local machine.
-* [Train a machine learning model](#training) 
-* [Select a predefined UDF](#udf)
-* [Compile and launch an AsterixDB instance](#asterix)
-* [Call the UDF](#apply)
 
 ## <a name="training">Train a Machine Learning Model</a>
 Use one of the provided sample files in the training folder to train a machine learning model. In this example we illustrate steps for training a sentiment analysis pipeline using Scikit-Learn.
