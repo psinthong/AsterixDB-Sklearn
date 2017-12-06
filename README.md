@@ -1,6 +1,6 @@
 # Installing Scikit-Learn UDFs
 
-This document describes a complete cycle for social data analysis using Scikit-Learn package in AsterixDB. We assume you have followed the [installation instructions](http://asterixdb.apache.org/docs/0.9.0/install.html) to set up a running AsterixDB instance.
+This document describes a complete cycle for social data analysis using Scikit-Learn package in AsterixDB. We assume you have followed the [installation instructions](http://asterixdb.apache.org/docs/0.9.2/install.html) to set up a running AsterixDB instance.
 
 ## How To Use
 * Clone this repository onto your local machine.
