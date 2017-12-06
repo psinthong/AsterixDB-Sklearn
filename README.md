@@ -33,7 +33,9 @@ Typing in the above command should print out a correct python version. If Python
 
 	sudo pip install -U nltk
 
-	sudo pip install jep
+Install Java Embedded Python support. This is to enab
+
+	sudo -H pip install jep
 
 Make sure jep is accessible by a jvm. Drop jep jar file into Java library path.
 
@@ -80,9 +82,9 @@ Use ansible to install the packaged udf and launch AsterixDB.
 
 	./deploy.sh
 
-	./udf.sh -m i -d DATAVERSE_NAME -l LIBRARY_NAME -p UDF_PACKAGE_PATH
+Install udf package using ansible. Put in the absolute path to the packaged udf. For example: replace UDF\_PACKAGE\_PATH with ../home/user/AsterixDB-Sklearn/AsterixDB-Sklearn/target/asterix-sklearn-udf-0.1-SNAPSHOT-testlib.zip. Replace DATAVERSE\_NAME with the name you would like to use with this udf. Note: This DATAVERSE_NAME if does not exist in your AsterixDB environment, it will be created.
 
-Put in the absolute path to the packaged udf. For example: replace UDF\_PACKAGE\_PATH with ../home/user/AsterixDB-Sklearn/AsterixDB-Sklearn/target/asterix-sklearn-udf-0.1-SNAPSHOT-testlib.zip
+	./udf.sh -m i -d DATAVERSE_NAME -l LIBRARY_NAME -p UDF_PACKAGE_PATH
 
 
 Start your instance.
@@ -95,7 +97,7 @@ Start your instance.
 	
 Bring up the AsterixDB web interface by going to http://localhost:19001/
 
-The below example uses a local file adapter to load a sample of 1000 twitter texts(provided with this repository) and call the sentiment udf. Replace the path to the twitter_1000.txt file with your absolute path.
+The below example uses a local file adapter to load a sample of 1000 twitter texts(provided with this repository) and call the sentiment udf. Replace the path to the twitter_1000.txt file with your absolute path. Edit the DATAVERSE\_NAME and and LIBRARY\_NAME to match the ones you specify while installing the udf package.
 
 	USE DATAVERSE_NAME;
 
@@ -118,3 +120,4 @@ The below example uses a local file adapter to load a sample of 1000 twitter tex
 To stop the instance :
 
 	./stop.sh
+
