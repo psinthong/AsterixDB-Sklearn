@@ -37,7 +37,9 @@ Typing in the above command should print out a correct python version. If Python
 
 Make sure jep is accessible by a jvm. Drop jep jar file into Java library path.
 
-	sudo cp lib/libjep.jnilib /Library/Java/Extensions
+	sudo cp <path to your python's site-packages that contains jep> /Library/Java/Extensions
+
+	sudo cp /usr/local/lib/python3.6/site-packages/jep/ /Library/Java/Extensions
 
 
 ## <a name="training">Train a Machine Learning Model</a>
