@@ -1,6 +1,6 @@
 # Installing Scikit-Learn UDFs
 
-This document describes a complete cycle for social data analysis using Scikit-Learn package in AsterixDB. We assume you have followed the [installation instructions](http://asterixdb.apache.org/docs/0.9.0/install.html) to set up a running AsterixDB instance.
+This document describes a complete cycle for social data analysis using Scikit-Learn package in AsterixDB. We assume you have followed the [installation instructions](http://asterixdb.apache.org/docs/0.9.2/install.html) to set up a running AsterixDB instance.
 
 ## How To Use
 * Clone this repository onto your local machine.
@@ -33,13 +33,15 @@ Typing in the above command should print out a correct python version. If Python
 
 	sudo pip install -U nltk
 
-	sudo pip install jep
+Install Java Embedded Python support. This is to enable a Java UDF to exchange information with python libraries(Scikit-Learn).
+
+	sudo -H pip install jep
 
 Make sure jep is accessible by a jvm. Drop jep jar file into Java library path.
 
-	sudo cp <path to your python's site-packages that contains jep> /Library/Java/Extensions
+	sudo cp lib/libjep.jnilib /Library/Java/Extensions
 
-	sudo cp /usr/local/lib/python3.6/site-packages/jep/ /Library/Java/Extensions
+Note: If JEP is installed correctly, typing in 'jep' in your terminal should bring up a JEP shell. If there is an error, it is possible that your system's python interpreter does not find jep package in its search path. You would then need to set a path variable.
 
 
 ## <a name="training">Train a Machine Learning Model</a>
@@ -82,9 +84,9 @@ Use ansible to install the packaged udf and launch AsterixDB.
 
 	./deploy.sh
 
-	./udf.sh -m i -d DATAVERSE_NAME -l LIBRARY_NAME -p UDF_PACKAGE_PATH
+Install udf package using ansible. Put in the absolute path to the packaged udf. For example: replace UDF\_PACKAGE\_PATH with ../home/user/AsterixDB-Sklearn/AsterixDB-Sklearn/target/asterix-sklearn-udf-0.1-SNAPSHOT-testlib.zip. Replace DATAVERSE\_NAME with the name you would like to use with this udf. Note: This DATAVERSE_NAME if does not exist in your AsterixDB environment, it will be created.
 
-The UDF\_PACKAGE\_PATH = ../AsterixDB-Sklearn/target/asterix-sklearn-udf-0.1-SNAPSHOT-testlib.zip
+	./udf.sh -m i -d DATAVERSE_NAME -l LIBRARY_NAME -p UDF_PACKAGE_PATH
 
 
 Start your instance.
@@ -95,6 +97,10 @@ Start your instance.
 
 ## <a name="apply">Call the UDF</a>
 	
+Bring up the AsterixDB web interface by going to http://localhost:19001/
+
+The below example uses a local file adapter to load a sample of 1000 twitter texts(provided with this repository) and call the sentiment udf. Replace the path to the twitter_1000.txt file with your absolute path. Edit the DATAVERSE\_NAME and and LIBRARY\_NAME to match the ones you specify while installing the udf package.
+
 	USE DATAVERSE_NAME;
 
 	create type Tweet as open{
@@ -109,6 +115,11 @@ Start your instance.
 	LOAD DATASET TweetItems USING localfs
 	    (("path"="127.0.0.1:///home/user/AsterixDB-Sklearn/twitter_1000.txt"),("format"="adm"));
 
-	select tweet.text as text, skl#SentimentScore(tweet.text) as sentiment
+	select tweet.text as text, LIBRARY_NAME#SentimentScore(tweet.text) as sentiment
 	    from TweetItems tweet
 	    limit 100;
+
+To stop the instance :
+
+	./stop.sh
+
