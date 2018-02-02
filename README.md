@@ -41,7 +41,7 @@ Make sure jep is accessible by a jvm. Drop jep jar file into Java library path.
 
 	sudo cp <path to your python's site-packages that contains jep> /Library/Java/Extensions
 
-	sudo cp /usr/local/lib/python3.6/site-packages/jep/ /Library/Java/Extensions
+	sudo cp /usr/local/lib/python3.6/site-packages/jep/libjep.jnilib /Library/Java/Extensions
 
 Note: If JEP is installed correctly, typing in 'jep' in your terminal should bring up a JEP shell. If there is an error, it is possible that your system's python interpreter does not find jep package in its search path. You would then need to set a path variable.
 
