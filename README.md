@@ -36,13 +36,17 @@ Install Java Embedded Python support. This is to enable a Java UDF to exchange i
 
 	sudo -H pip install jep
 
-Make sure jep is accessible by a jvm. Drop jep JNI file into Java library path.
+Make sure jep is accessible by a jvm. Drop jep JNI file into Java library path. Note: Depends on your system, it is either libjep.jnilib or libjep.so
 
 	sudo cp <path to Jep's JNI file> /Library/Java/Extensions
 
 	sudo cp /usr/local/lib/python3.6/site-packages/jep/libjep.jnilib /Library/Java/Extensions
 
 Note: If JEP is installed correctly, typing in 'jep' in your terminal should bring up a JEP shell. If there is an error, it is possible that your system's python interpreter does not find jep package in its search path. You would then need to set a path variable.
+
+To test if jep is configured correctly, try running a shell script below.
+
+	./test.sh
 
 
 ## <a name="training">Train a Machine Learning Model</a>
