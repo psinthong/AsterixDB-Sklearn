@@ -25,13 +25,12 @@ Typing in the above command should print out a correct python version. If Python
 
 	python -m pip install --upgrade pip
 
-	sudo pip install numpy
+	sudo -H pip install numpy
 
-	sudo pip install matplotlib
+	sudo -H pip install scipy
 
-	sudo pip install -U scikit-learn
+	sudo -H pip install -U scikit-learn
 
-	sudo pip install -U nltk
 
 Install Java Embedded Python support. This is to enable a Java UDF to exchange information with python libraries(Scikit-Learn).
 

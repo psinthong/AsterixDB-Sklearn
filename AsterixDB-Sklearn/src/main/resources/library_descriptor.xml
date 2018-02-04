@@ -66,7 +66,7 @@
     </libraryFunction>
     <libraryFunction>
       <function_type>SCALAR</function_type>
-      <name>StringToInt</name>
+      <name>getSentiment</name>
       <init_parameters>MODEL_NAME</init_parameters>
       <arguments>ASTRING</arguments>
       <return_type>AINT32</return_type>
