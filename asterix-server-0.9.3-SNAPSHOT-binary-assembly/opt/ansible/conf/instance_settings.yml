@@ -33,7 +33,7 @@ ccbin: "asterixcc"
 basedir: "{{ ansible_env.HOME }}"
 
 # The working directory.
-binarydir: "{{ basedir }}/{{ product }}"
+binarydir: "{{basedir}}/{{ product }}"
 
 # The full binary distribution directory.
 dist: "../../../../"

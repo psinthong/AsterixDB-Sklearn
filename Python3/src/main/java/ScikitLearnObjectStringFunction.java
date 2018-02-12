@@ -16,21 +16,20 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.asterix.external.library;
 
 import jep.Jep;
-import jep.JepConfig;
 import jep.JepException;
 import org.apache.asterix.external.api.IExternalScalarFunction;
 import org.apache.asterix.external.api.IFunctionHelper;
+import org.apache.asterix.external.api.IJObject;
 import org.apache.asterix.external.library.java.JObjects;
-import org.apache.asterix.external.library.java.JTypeTag;
 import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
-public class ScikitLearnStringIntFunction implements IExternalScalarFunction {
+public class ScikitLearnObjectStringFunction implements IExternalScalarFunction {
 
     private static Jep jep;
 
@@ -43,49 +42,55 @@ public class ScikitLearnStringIntFunction implements IExternalScalarFunction {
     public void evaluate(IFunctionHelper functionHelper) throws Exception {
 
         //-------------Get all features----------------//
-        JObjects.JString inputText = ((JObjects.JString) functionHelper.getArgument(0));
+        JObjects.JRecord inputRecord = (JObjects.JRecord) functionHelper.getArgument(0);
+        JObjects.JString outputRecord = (JObjects.JString) functionHelper.getResultObject();
 
-        JObjects.JInt output = (JObjects.JInt) functionHelper.getObject(JTypeTag.INT);
+
+        IJObject inputRecordFields[] = inputRecord.getFields();
+        Object[] testArray = new Object[inputRecordFields.length];
+        for (int i = 0; i < inputRecordFields.length; i++) {
+            testArray[i] = inputRecordFields[i].getIAObject();
+        }
 
         //Getting model result
-        String[] testArray = new String[]{inputText.getValue()};
-        int result = getResult(testArray);
+        String result = getResult(testArray);
 
-        output.setValue(result);
-        functionHelper.setResult(output);
+        outputRecord.setValue(result);
+        functionHelper.setResult(outputRecord);
     }
 
     @Override
-    public void initialize(IFunctionHelper functionHelper) throws Exception {
+    public void initialize(IFunctionHelper functionHelper)  throws Exception{
 
         String modelPath = "sentiment_pipeline";
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream(modelPath);
-        byte[] byteArray = IOUtils.toByteArray(in);
-        String byteString =  new String(byteArray);
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream(modelPath);
+        byte[] byteArray = IOUtils.toByteArray(is);
 
-        jep = new Jep(new JepConfig().addIncludePaths("."));
+        jep = new Jep();
         jep.eval("import pickle");
-        jep.set("bytes", byteString);
-        jep.eval("rdf = pickle.loads(bytes)");
+
+        jep.set("f", byteArray);
+        jep.eval("pipeline = pickle.loads(bytes(f),encoding=\"latin1\")");
+
     }
 
 
-    public static int getResult(String[] text) {
+
+    public static String getResult(Object[] text) {
         try {
 
             jep.set("data", text);
-            jep.eval("result = rdf.predict(data).tolist()");
+            jep.eval("result = pipeline.predict(data)[0]");
 
-            ArrayList<Integer> retArray = (ArrayList<Integer>)jep.getValue("result");
-
-            return retArray.get(0);
+            String ret = jep.getValue("result").toString();
+            return ret;
         }
         catch (JepException e){
 
             System.out.println(e.getMessage());
         }
 
-        return -1;
+        return null;
     }
 
 }

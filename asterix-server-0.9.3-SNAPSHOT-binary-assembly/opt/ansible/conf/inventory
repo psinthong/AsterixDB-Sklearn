@@ -18,10 +18,10 @@
 ; Sets the ansible ssh user account if it is different from the current user
 ; that runs the scripts.
 ;[all:vars]
-;ansible_ssh_user=<fill with your ssh account username>
+;ansible_user=<psinthon>
 
 [cc]
-localhost
+localhost	ansible_connection=local	ansible_user=gift
 
 [ncs]
-localhost
+localhost	ansible_connection=local	ansible_user=gift
