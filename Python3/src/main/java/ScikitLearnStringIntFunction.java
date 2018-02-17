@@ -18,7 +18,6 @@
  */
 
 import jep.Jep;
-import jep.JepConfig;
 import jep.JepException;
 import org.apache.asterix.external.api.IExternalScalarFunction;
 import org.apache.asterix.external.api.IFunctionHelper;
@@ -26,9 +25,11 @@ import org.apache.asterix.external.library.java.JObjects;
 import org.apache.asterix.external.library.java.JTypeTag;
 import org.apache.commons.io.IOUtils;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
+
+
 
 public class ScikitLearnStringIntFunction implements IExternalScalarFunction {
 
@@ -58,15 +59,25 @@ public class ScikitLearnStringIntFunction implements IExternalScalarFunction {
     @Override
     public void initialize(IFunctionHelper functionHelper)  throws Exception{
 
-        String modelPath = "sentiment_pipeline";
+        String modelPath = "sentiment_pipeline3";
+
         InputStream is = this.getClass().getClassLoader().getResourceAsStream(modelPath);
+
         byte[] byteArray = IOUtils.toByteArray(is);
+
+        String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+        String parent = new File(path).getParentFile().getPath();
+        String newFilePath = parent+"/"+modelPath;
+        FileOutputStream fos = new FileOutputStream(newFilePath);
+        fos.write(byteArray);
 
         jep = new Jep();
         jep.eval("import pickle");
 
-        jep.set("f", byteArray);
-        jep.eval("pipeline = pickle.loads(bytes(f),encoding=\"latin1\")");
+        jep.set("fname", newFilePath);
+        jep.eval("f = open(fname,\'rb\')");
+        jep.eval("pipeline = pickle.load(f)");
+        jep.eval("f.close()");
 
     }
 
