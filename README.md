@@ -76,7 +76,7 @@ Copy the serialized package into AsterixDB-Sklearn folder.
 ## <a name="asterix">Compile and launch an AsterixDB instance</a>
 Select Package version based on your default python version installed.
 
-	cd Python2
+	cd Python3
 
 	mvn package -DskipTests
 
