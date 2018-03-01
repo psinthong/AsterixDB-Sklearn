@@ -82,21 +82,12 @@ public class ScikitLearnStringIntFunction implements IExternalScalarFunction {
     }
 
 
-    public static int getResult(String[] text) {
-        try {
+    public static int getResult(String[] text) throws JepException{
+        jep.set("data", text);
+        jep.eval("result = pipeline.predict(data)[0]");
 
-            jep.set("data", text);
-            jep.eval("result = pipeline.predict(data)[0]");
-
-            int ret = Integer.parseInt(jep.getValue("result").toString());
-            return ret;
-        }
-        catch (JepException e){
-
-            System.out.println(e.getMessage());
-        }
-
-        return -1;
+        int ret = Integer.parseInt(jep.getValue("result").toString());
+        return ret;
     }
 
 }

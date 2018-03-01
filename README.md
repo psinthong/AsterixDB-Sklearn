@@ -69,7 +69,7 @@ Copy the serialized package into AsterixDB-Sklearn folder.
 
 - Open the 'library_descriptor.xml' file (under AsterixDB-Sklearn/src/main/resources/).
 - Select a corresponding UDF to match the expected input/output (for this example, it is string/int)
-- Edit the model name to match the trained model which is 'sentiment_pipeline'.
+- Edit the model name in the corresponding Java file(ie. ScikitLearnStringIntFunction.java) to match the trained model which is 'sentiment_pipeline'.
 - Edit the function name. This will be the name you will use to call the function from AsterixDB (For our case, lets change it to 'SentimentScore').
 
 
