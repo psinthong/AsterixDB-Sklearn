@@ -76,8 +76,7 @@ public class ScikitLearnStringIntFunction implements IExternalScalarFunction {
         try {
 
             jep.set("data", text);
-            jep.eval("result = rdf.predict(data).tolist()");
-            jep.eval(" print(d.predict([\'I like it\']))");
+            jep.eval("result = pipeline.predict(data).tolist()");
 
             ArrayList<Integer> retArray = (ArrayList<Integer>)jep.getValue("result");
 

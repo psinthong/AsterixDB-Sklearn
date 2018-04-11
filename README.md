@@ -63,7 +63,7 @@ Copy the serialized package into AsterixDB-Sklearn folder.
 	
 	cd ..
 
-	cp training/target/sentiment_pipeline AsterixDB-Sklearn/src/main/resources/
+	cp training/target/sentiment_pipeline AsterixDB-Sklearn/$PYTHON_VERSION/src/main/resources/
 
 ## <a name="udf">Select a Predefined UDF</a>
 
